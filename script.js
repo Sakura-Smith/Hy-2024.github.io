@@ -1,36 +1,33 @@
-function createCalendar(elem, year, month) {
-    let mon = month - 1; // JS中月份从0开始
-    let d = new Date(year, mon);
+const monthDisplay = document.getElementById('month-display');
+const daysContainer = document.getElementById('days-container');
+const prevMonth = document.getElementById('prev-month');
+const nextMonth = document.getElementById('next-month');
 
-    let table = '<div class="calendar-header"><div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div></div><div class="calendar-body">';
+let currentDate = new Date();
 
-    // 空格，直到第一天
-    for (let i = 0; i < d.getDay(); i++) {
-        table += '<div class="day"></div>';
+function renderCalendar() {
+    daysContainer.innerHTML = '';
+    const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+    
+    monthDisplay.textContent = firstDay.toLocaleDateString('zh-CN', { month: 'long', year: 'numeric' });
+    
+    for (let i = 1; i <= lastDay.getDate(); i++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'day';
+        dayElement.textContent = i;
+        daysContainer.appendChild(dayElement);
     }
-
-    // 日历主体：从1号到月末
-    while (d.getMonth() == mon) {
-        table += `<div class="day">${d.getDate()}</div>`;
-
-        if (d.getDay() % 7 == 6) { 
-            table += '</div><div class="calendar-body">'; 
-        }
-
-        d.setDate(d.getDate() + 1);
-    }
-
-    // 添加剩余的空格
-    if (d.getDay() != 0) {
-        for (let i = d.getDay(); i < 7; i++) {
-            table += '<div class="day"></div>';
-        }
-    }
-
-    // 结束表格
-    table += '</div>';
-
-    elem.innerHTML = table;
 }
 
-createCalendar(document.getElementById('calendar'), 2023, 4); // 示例：生成2023年4月的日历
+prevMonth.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+});
+
+nextMonth.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+});
+
+renderCalendar();
