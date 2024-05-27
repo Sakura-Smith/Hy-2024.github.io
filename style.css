@@ -1,0 +1,26 @@
+#calendar {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f4f4f4;
+}
+
+.day {
+    width: 14.28%; /* 100% / 7 days */
+    padding: 10px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eee;
+}
+
+.day-header {
+    font-weight: bold;
+    text-align: center;
+}
